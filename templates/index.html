@@ -517,10 +517,16 @@
     document.getElementById('clip-count').textContent = CLIPS.length;
 
     const audioElement = document.getElementById('audio-player');
+    const backgroundVideo = document.getElementById('bg-video');
     const playIcon = document.getElementById('play-icon');
     const grid = document.getElementById('project-grid');
     const tracklistWrap = document.getElementById('tracklist');
     const tracklistInner = document.getElementById('tracklist-inner');
+
+    backgroundVideo.muted = true;
+    backgroundVideo.play().catch(error => {
+        console.warn('Lecture automatique de la vidéo bloquée :', error);
+    });
 
     let current = null;      // { p: index projet, t: index piste } de la piste chargée
     let openProject = null;  // index du projet dont la tracklist est ouverte
