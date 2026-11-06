@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yacou B OG | Guide Suprême</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            DEFAULT: '#E53935', // Rouge Vif
+                            hover: '#C62828',
+                            light: 'rgba(229, 57, 53, 0.15)'
+                        },
+                        dark: {
+                            DEFAULT: '#0A0A0A',
+                            card: '#121212',
+                            border: '#222222'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; background-color: #0A0A0A; color: #F3F4F6; }
+    </style>
+</head>
+<body class="pb-28">
+
+    <!-- NAVBAR HEADER -->
+    <header class="sticky top-0 z-50 bg-dark/95 backdrop-blur-md border-b border-dark-border px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <!-- LOGO OFFICIEL (CORRIGE EN logo.png) -->
+            <img src="../static/images/logo.png" alt="Logo Yacou B OG" class="h-9 w-auto object-contain">
+            <div>
+                <span class="font-extrabold text-base text-white tracking-tight block leading-none">YACOU B OG</span>
+                <span class="text-[10px] text-brand font-bold uppercase tracking-widest">Guide Suprême</span>
+            </div>
+        </div>
+
+        <!-- NAVIGATION DESKTOP -->
+        <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-gray-300">
+            <a href="#accueil" class="hover:text-brand transition text-brand font-bold">Accueil</a>
+            <a href="#music" class="hover:text-brand transition">Musique</a>
+            <a href="#clips" class="hover:text-brand transition">Clips</a>
+            <a href="#merch" class="hover:text-brand transition">Boutique</a>
+            <a href="#events" class="hover:text-brand transition">Concerts</a>
+            <a href="#bio" class="hover:text-brand transition">Presse</a>
+        </nav>
+
+        <div class="flex items-center space-x-3">
+            <a href="#contact" class="hidden sm:inline-block text-xs font-bold px-4 py-2 rounded-xl text-gray-300 bg-dark-card hover:bg-gray-800 transition border border-dark-border">Contact</a>
+            <a href="#contact" class="bg-brand hover:bg-brand-hover text-white text-xs font-bold px-4 py-2 rounded-xl shadow-md shadow-brand/30 transition">Booking</a>
+            <button onclick="toggleMenu()" class="md:hidden w-9 h-9 bg-dark-card rounded-xl flex items-center justify-center text-gray-300 border border-dark-border">
+                <i class="fas fa-bars text-sm"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- MENU MOBILE -->
+    <div id="mobile-menu" class="hidden md:hidden bg-dark-card border-b border-dark-border px-6 py-4 space-y-3 shadow-lg">
+        <a href="#accueil" onclick="toggleMenu()" class="block py-2 font-semibold text-white hover:text-brand">Accueil</a>
+        <a href="#music" onclick="toggleMenu()" class="block py-2 font-semibold text-gray-300 hover:text-brand">Musique & Discographie</a>
+        <a href="#clips" onclick="toggleMenu()" class="block py-2 font-semibold text-gray-300 hover:text-brand">Clips Vidéo</a>
+        <a href="#merch" onclick="toggleMenu()" class="block py-2 font-semibold text-gray-300 hover:text-brand">Boutique Merch</a>
+        <a href="#events" onclick="toggleMenu()" class="block py-2 font-semibold text-gray-300 hover:text-brand">Concerts & Tournée</a>
+        <a href="#bio" onclick="toggleMenu()" class="block py-2 font-semibold text-gray-300 hover:text-brand">Biographie & EPK</a>
+        <a href="#contact" onclick="toggleMenu()" class="block py-2 font-semibold text-brand">Booking & Management</a>
+    </div>
+
+    <!-- 1. HERO SECTION D'ACCUEIL -->
+    <section id="accueil" class="relative max-w-5xl mx-auto px-4 pt-24 pb-20 text-center overflow-hidden my-4 rounded-3xl mx-3 border border-dark-border shadow-2xl bg-dark">
+        
+        <!-- VIDEO D'ARRIERE-PLAN -->
+        <div class="absolute inset-0 z-0 overflow-hidden rounded-3xl">
+            <video id="bg-video" autoplay muted loop playsinline preload="auto" class="w-full h-full object-cover opacity-40 scale-105">
+                <source src="../static/images/hero-video-opt.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/60 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-3xl mx-auto space-y-6">
+            <div class="inline-flex items-center space-x-2 bg-brand-light text-brand text-xs font-bold px-4 py-1.5 rounded-full border border-brand/30">
+                <span>👑 GUIDE SUPRÊME</span>
+                <i class="fas fa-chevron-right text-[10px]"></i>
+            </div>
+            
+            <h1 class="text-4xl md:text-6xl font-black text-white tracking-tight leading-tight">
+                YACOU B OG <br>
+                <span class="text-brand">GUIDE SUPRÊME</span>
+            </h1>
+            
+            <p class="text-gray-300 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+                Le son authentique de Bamako. Plateforme officielle Mobile-First pour écouter les derniers projets, visionner les clips et réserver les dates de concert.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+                <a href="#music" class="w-full sm:w-auto bg-brand hover:bg-brand-hover text-white font-bold px-6 py-3 rounded-xl shadow-lg shadow-brand/30 text-sm transition">
+                    <i class="fas fa-play mr-2 text-xs"></i> Écouter les Projets
+                </a>
+                <a href="#contact" class="w-full sm:w-auto bg-dark-card hover:bg-gray-800 text-white border border-dark-border font-bold px-6 py-3 rounded-xl text-sm transition">
+                    Réserver une Date
+                </a>
+            </div>
+        </div>
+    </section>
+
+   <!-- 2. CATALOGUE MUSICAL OFFICIEL (ORGANISÉ PAR MIXTAPES, EPS & SINGLES) -->
+    <section id="music" class="max-w-4xl mx-auto px-6 py-12">
+        <div class="mb-8 flex items-center justify-between">
+            <div>
+                <h2 class="text-2xl font-bold text-white">Catalogue Musical</h2>
+                <p class="text-xs text-gray-400">Discographie officielle du Guide Suprême</p>
+            </div>
+            <span class="text-xs font-semibold text-brand bg-brand-light px-3 py-1 rounded-lg border border-brand/20">Streaming HD</span>
+        </div>
+
+        <!-- ÉLÉMENT AUDIO HTML5 MASQUÉ POUR LE LECTEUR PERSISTANT -->
+        <audio id="audio-player"></audio>
+
+       <!-- CATEGORIE : MIXTAPES -->
+        <div class="mb-10">
+            <h3 class="text-sm font-extrabold text-brand uppercase tracking-wider mb-4 flex items-center">
+                <i class="fas fa-tape mr-2"></i> Mixtapes
+            </h3>
+            
+            <!-- GUIDE SUPREME I (8 PISTES AVEC COVER1.JPG SUR CHAQUE LIGNE) -->
+            <div class="bg-dark-card p-6 rounded-3xl border border-dark-border shadow-xl space-y-6">
+                <div class="flex flex-col sm:flex-row items-center gap-4">
+                    <div class="w-28 h-28 bg-dark rounded-2xl overflow-hidden border border-brand/30 flex-shrink-0 shadow-lg">
+                        <img src="../static/images/cover1.jpg" alt="Guide Suprême I Cover" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-bold text-brand uppercase tracking-widest bg-brand-light px-3 py-1 rounded-full border border-brand/20">Mixtape Officielle</span>
+                        <h4 class="text-xl font-black text-white mt-2">Guide Suprême I</h4>
+                        <p class="text-xs text-gray-400 mt-1">8 pistes • 2026</p>
+                    </div>
+                </div>
+
+                <!-- Liste complète des 8 sons -->
+                <div class="space-y-3 pt-2 border-t border-dark-border max-h-[450px] overflow-y-auto pr-2">
+                    
+                    <!-- 1. Karma -->
+                    <div class="p-3 bg-dark/60 rounded-2xl border border-dark-border flex items-center justify-between hover:border-brand/40 transition">
+                        <div class="flex items-center space-x-3">
+                            <img src="../static/images/cover1.jpg" alt="Karma" class="w-10 h-10 rounded-xl object-cover border border-dark-border flex-shrink-0">
+                            <div>
+                                <h5 class="font-bold text-xs text-white">Karma</h5>
+                                <p class="text-[10px] text-gray-400">Yacou B OG • 2:58</p>
+                            </div>
+                        </div>
+                        <button onclick="playAudio('../static/audio/karma.mp3', 'Karma - Yacou B OG')" class="w-9 h-9 bg-brand text-white rounded-xl flex items-center justify-center shadow-md shadow-brand/30 hover:scale-105 transition">
+                            <i class="fas fa-play text-[10px]"></i>
+                        </button>
+                    </div>
+
+                    <!-- 2. Option -->
+                    <div class="p-3 bg-dark/60 rounded-2xl border border-dark-border flex items-center justify-between hover:border-brand/40 transition">
+                        <div class="flex items-center space-x-3">
+                            <img src="../static/images/cover1.jpg" alt="Option" class="w-10 h-10 rounded-xl object-cover border border-dark-border flex-shrink-0">
+                            <div>
+                                <h5 class="font-bold text-xs text-white">Option</h5>
+                                <p class="text-[10px] text-gray-400">Yacou B OG • 2:51</p>
+                            </div>
+                        </div>
+                        <button onclick="playAudio('../static/audio/option.mp3', 'Option - Yacou B OG')" class="w-9 h-9 bg-brand text-white rounded-xl flex items-center justify-center shadow-md shadow-brand/30 hover:scale-105 transition">
+                            <i class="fas fa-play text-[10px]"></i>
+                        </button>
+                    </div>
+
+                    <!-- 3. All-Star -->
+                    <div class="p-3 bg-dark/60 rounded-2xl border border-dark-border flex items-center justify-between hover:border-brand/40 transition">
+                        <div class="flex items-center space-x-3">
+                            <img src="../static/images/cover1.jpg" alt="All-Star" class="w-10 h-10 rounded-xl object-cover border border-dark-border flex-shrink-0">
+                            <div>
+                                <h5 class="font-bold text-xs text-white">All-Star (feat. Qulture)</h5>
+                                <p class="text-[10px] text-gray-400">Yacou B OG • 1:52</p>
+                            </div>
+                        </div>
+                        <button onclick="playAudio('../static/audio/all-star.mp3', 'All-Star (feat. Qulture) - Yacou B OG')" class="w-9 h-9 bg-brand text-white rounded-xl flex items-center justify-center shadow-md shadow-brand/30 hover:scale-105 transition">
+                            <i class="fas fa-play text-[10px]"></i>
+                        </button>
+                    </div>
+
+                    <!-- 4. Mali Piano -->
+                    <div class="p-3 bg-dark/60 rounded-2xl border border-dark-border flex items-center justify-between hover:border-brand/40 transition">
+                        <div class="flex items-center space-x-3">
+                            <img src="../static/images/cover1.jpg" alt="Mali Piano" class="w-10 h-10 rounded-xl object-cover border border-dark-border flex-shrink-0">
+                            <div>
+                                <h5 class="font-bold text-xs text-white">Mali Piano</h5>
+                                <p class="text-[10px] text-gray-400">Yacou B OG • 2:44</p>
+                            </div>
+                        </div>
+                        <button onclick="playAudio('../static/audio/mali-piano.mp3', 'Mali Piano - Yacou B OG')" class="w-9 h-9 bg-brand text-white rounded-xl flex items-center justify-center shadow-md shadow-brand/30 hover:scale-105 transition">
+                            <i class="fas fa-play text-[10px]"></i>
+                        </button>
+                    </div>
+
+                    <!-- 5. Bamako -->
+                    <div class="p-3 bg-dark/60 rounded-2xl border border-dark-border flex items-center justify-between hover:border-brand/40 transition">
+                        <div class="flex items-center space-x-3">
+                            <img src="../static/images/cover1.jpg" alt="Bamako" class="w-10 h-10 rounded-xl object-cover border border-dark-border flex-shrink-0">
+                            <div>
+                                <h5 class="font-bold text-xs text-white">Bamako</h5>
+                                <p class="text-[10px] text-gray-400">Yacou B OG • 3:07</p>
+                            </div>
+                        </div>
+                        <button onclick="playAudio('../static/audio/bamako.mp3', 'Bamako - Yacou B OG')" class="w-9 h-9 bg-brand text-white rounded-xl flex items-center justify-center shadow-md shadow-brand/30 hover:scale-105 transition">
+                            <i class="fas fa-play text-[10px]"></i>
+                        </button>
+                    </div>
+
+                    <!-- 6. Eske -->
+                    <div class="p-3 bg-dark/60 rounded-2xl border border-dark-border flex items-center justify-between hover:border-brand/40 transition">
+                        <div class="flex items-center space-x-3">
+                            <img src="../static/images/cover1.jpg" alt="Eske" class="w-10 h-10 rounded-xl object-cover border border-dark-border flex-shrink-0">
+                            <div>
+                                <h5 class="font-bold text-xs text-white">Eske</h5>
+                                <p class="text-[10px] text-gray-400">Yacou B OG • 2:39</p>
+                            </div>
+                        </div>
+                        <button onclick="playAudio('../static/audio/eske.mp3', 'Eske - Yacou B OG')" class="w-9 h-9 bg-brand text-white rounded-xl flex items-center justify-center shadow-md shadow-brand/30 hover:scale-105 transition">
+                            <i class="fas fa-play text-[10px]"></i>
+                        </button>
+                    </div>
+
+                    <!-- 7. Vilain -->
+                    <div class="p-3 bg-dark/60 rounded-2xl border border-dark-border flex items-center justify-between hover:border-brand/40 transition">
+                        <div class="flex items-center space-x-3">
+                            <img src="../static/images/cover1.jpg" alt="Vilain" class="w-10 h-10 rounded-xl object-cover border border-dark-border flex-shrink-0">
+                            <div>
+                                <h5 class="font-bold text-xs text-white">Vilain</h5>
+                                <p class="text-[10px] text-gray-400">Yacou B OG • 3:02</p>
+                            </div>
+                        </div>
+                        <button onclick="playAudio('../static/audio/vilain.mp3', 'Vilain - Yacou B OG')" class="w-9 h-9 bg-brand text-white rounded-xl flex items-center justify-center shadow-md shadow-brand/30 hover:scale-105 transition">
+                            <i class="fas fa-play text-[10px]"></i>
+                        </button>
+                    </div>
+
+                    <!-- 8. Kônô Fa Dep -->
+                    <div class="p-3 bg-dark/60 rounded-2xl border border-dark-border flex items-center justify-between hover:border-brand/40 transition">
+                        <div class="flex items-center space-x-3">
+                            <img src="../static/images/cover1.jpg" alt="Kônô Fa Dep" class="w-10 h-10 rounded-xl object-cover border border-dark-border flex-shrink-0">
+                            <div>
+                                <h5 class="font-bold text-xs text-white">Kônô Fa Dep</h5>
+                                <p class="text-[10px] text-gray-400">Yacou B OG • 2:23</p>
+                            </div>
+                        </div>
+                        <button onclick="playAudio('../static/audio/kono-fa-dep.mp3', 'Kônô Fa Dep - Yacou B OG')" class="w-9 h-9 bg-brand text-white rounded-xl flex items-center justify-center shadow-md shadow-brand/30 hover:scale-105 transition">
+                            <i class="fas fa-play text-[10px]"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+                <!-- Guide Suprême II -->
+                <div class="p-4 bg-dark-card rounded-2xl border border-dark-border flex items-center justify-between hover:border-brand/40 transition shadow-md">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-14 h-14 bg-dark text-brand rounded-xl flex items-center justify-center font-black border border-dark-border text-xs">MIX 2</div>
+                        <div>
+                            <h4 class="font-bold text-sm text-white">Guide Suprême II</h4>
+                            <p class="text-xs text-gray-400">Mixtape officielle</p>
+                        </div>
+                    </div>
+                    <button onclick="playAudio('../static/audio/guide-supreme-2.mp3', 'Guide Suprême II')" class="w-10 h-10 bg-brand text-white rounded-xl flex items-center justify-center shadow-md shadow-brand/30 hover:scale-105 transition">
+                        <i class="fas fa-play text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CATEGORIE : EPS (4 PROJETS) -->
+        <div class="mb-10">
+            <h3 class="text-sm font-extrabold text-brand uppercase tracking-wider mb-4 flex items-center">
+                <i class="fas fa-layer-group mr-2"></i> EPs
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Venom -->
+                <div class="p-4 bg-dark-card rounded-2xl border border-dark-border flex items-center justify-between hover:border-brand/40 transition shadow-md">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-14 h-14 bg-dark text-brand rounded-xl flex items-center justify-center font-black border border-dark-border text-xs">EP 1</div>
+                        <div>
+                            <h4 class="font-bold text-sm text-white">Venom</h4>
+                            <p class="text-xs text-gray-400">EP officiel</p>
+                        </div>
+                    </div>
+                    <button onclick="playAudio('../static/audio/venom.mp3', 'Venom')" class="w-10 h-10 bg-brand text-white rounded-xl flex items-center justify-center shadow-md shadow-brand/30 hover:scale-105 transition">
+                        <i class="fas fa-play text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- Venom II -->
+                <div class="p-4 bg-dark-card rounded-2xl border border-dark-border flex items-center justify-between hover:border-brand/40 transition shadow-md">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-14 h-14 bg-dark text-brand rounded-xl flex items-center justify-center font-black border border-dark-border text-xs">EP 2</div>
+                        <div>
+                            <h4 class="font-bold text-sm text-white">Venom II</h4>
+                            <p class="text-xs text-gray-400">EP officiel</p>
+                        </div>
+                    </div>
+                    <button onclick="playAudio('../static/audio/venom-2.mp3', 'Venom II')" class="w-10 h-10 bg-brand text-white rounded-xl flex items-center justify-center shadow-md shadow-brand/30 hover:scale-105 transition">
+                        <i class="fas fa-play text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- Venom III -->
+                <div class="p-4 bg-dark-card rounded-2xl border border-dark-border flex items-center justify-between hover:border-brand/40 transition shadow-md">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-14 h-14 bg-dark text-brand rounded-xl flex items-center justify-center font-black border border-dark-border text-xs">EP 3</div>
+                        <div>
+                            <h4 class="font-bold text-sm text-white">Venom III</h4>
+                            <p class="text-xs text-gray-400">EP officiel</p>
+                        </div>
+                    </div>
+                    <button onclick="playAudio('../static/audio/venom-3.mp3', 'Venom III')" class="w-10 h-10 bg-brand text-white rounded-xl flex items-center justify-center shadow-md shadow-brand/30 hover:scale-105 transition">
+                        <i class="fas fa-play text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- Baye Fall I -->
+                <div class="p-4 bg-dark-card rounded-2xl border border-dark-border flex items-center justify-between hover:border-brand/40 transition shadow-md">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-14 h-14 bg-dark text-brand rounded-xl flex items-center justify-center font-black border border-dark-border text-xs">EP 4</div>
+                        <div>
+                            <h4 class="font-bold text-sm text-white">Baye Fall I</h4>
+                            <p class="text-xs text-gray-400">EP officiel</p>
+                        </div>
+                    </div>
+                    <button onclick="playAudio('../static/audio/baye-fall-1.mp3', 'Baye Fall I')" class="w-10 h-10 bg-brand text-white rounded-xl flex items-center justify-center shadow-md shadow-brand/30 hover:scale-105 transition">
+                        <i class="fas fa-play text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CATEGORIE : SINGLES -->
+        <div>
+            <h3 class="text-sm font-extrabold text-brand uppercase tracking-wider mb-4 flex items-center">
+                <i class="fas fa-music mr-2"></i> Singles & Exclusivités
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-4 bg-dark-card rounded-2xl border border-dark-border flex items-center justify-between hover:border-brand/40 transition shadow-md">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-14 h-14 bg-dark text-brand rounded-xl flex items-center justify-center font-black border border-dark-border text-xs">SNG</div>
+                        <div>
+                            <h4 class="font-bold text-sm text-white">Dernier Single Official</h4>
+                            <p class="text-xs text-gray-400">Single • 2026</p>
+                        </div>
+                    </div>
+                    <button onclick="playAudio('../static/audio/single.mp3', 'Dernier Single Official')" class="w-10 h-10 bg-brand text-white rounded-xl flex items-center justify-center shadow-md shadow-brand/30 hover:scale-105 transition">
+                        <i class="fas fa-play text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT / BOOKING -->
+    <section id="contact" class="max-w-4xl mx-auto px-6 py-12">
+        <div class="bg-dark-card border border-brand/30 p-8 rounded-3xl text-center space-y-4 shadow-xl">
+            <h3 class="text-2xl font-black text-white">Booking & Management</h3>
+            <p class="text-xs text-gray-400 max-w-md mx-auto">
+                Pour toute demande de concert, festival, interview ou partenariat professionnel.
+            </p>
+            <div class="pt-2">
+                <a href="https://wa.me/22370775158?text=Bonjour%20Management%20Yacou%20B%20OG,%20je%20souhaite%20effectuer%20une%20réservation" target="_blank" class="inline-flex items-center space-x-2 bg-brand hover:bg-brand-hover text-white font-bold px-6 py-3 rounded-xl shadow-lg shadow-brand/30 text-sm transition">
+                    <i class="fab fa-whatsapp text-base"></i>
+                    <span>Contacter sur WhatsApp (+223 70 77 51 58)</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- LECTEUR AUDIO PERSISTANT -->
+    <div class="fixed bottom-0 left-0 right-0 z-50 bg-dark/95 backdrop-blur-md border-t border-dark-border px-6 py-3 shadow-2xl flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-brand text-white rounded-xl flex items-center justify-center font-bold">
+                <i class="fas fa-music text-xs"></i>
+            </div>
+            <div>
+                <h4 id="current-song" class="text-xs font-bold text-white">Bamako Cypher</h4>
+                <p class="text-[10px] text-gray-400">Yacou B OG • En lecture</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-3">
+            <button onclick="togglePlay()" class="w-9 h-9 bg-brand text-white rounded-xl flex items-center justify-center shadow-md shadow-brand/30">
+                <i id="play-icon" class="fas fa-pause text-xs"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE LECTURE VIDEO AUTOMATIQUE -->
+   <script>
+    const audioElement = document.getElementById('audio-player');
+
+    function playAudio(fileUrl, title) {
+        audioElement.src = fileUrl;
+        audioElement.play().then(() => {
+            document.getElementById('current-song').innerText = title;
+            document.getElementById('play-icon').className = "fas fa-pause text-xs";
+        }).catch(e => {
+            console.log("Erreur de lecture audio :", e);
+        });
+    }
+
+    function togglePlay() {
+        const icon = document.getElementById('play-icon');
+        if (audioElement.paused) {
+            audioElement.play();
+            icon.className = "fas fa-pause text-xs";
+        } else {
+            audioElement.pause();
+            icon.className = "fas fa-play text-xs";
+        }
+    }
+</script>
+</body>
+</html>
