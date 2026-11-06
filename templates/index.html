@@ -156,8 +156,8 @@
     <section id="accueil" class="hero-dark relative max-w-5xl mx-auto px-4 pt-24 pb-20 text-center overflow-hidden my-4 rounded-3xl mx-3 border border-dark-border shadow-2xl bg-dark">
 
         <!-- VIDEO D'ARRIERE-PLAN -->
-        <div class="absolute inset-0 z-0 overflow-hidden rounded-3xl">
-            <video id="bg-video" autoplay muted loop playsinline preload="auto" class="w-full h-full object-cover opacity-40 scale-105">
+        <div class="absolute inset-0 w-full h-full overflow-hidden z-0 rounded-3xl">
+            <video id="bg-video" autoplay muted loop playsinline preload="auto" class="w-full h-full object-cover">
                 <source src="/static/images/hero-video-opt.mp4" type="video/mp4">
             </video>
             <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/60 to-transparent"></div>
@@ -484,6 +484,11 @@
         }
     ];
 
+    // Garantit le même format pour toutes les pistes : [titre, fichier MP3, durée optionnelle].
+    PROJECTS.forEach(project => {
+        project.tracks = project.tracks.map(([title, file, duration = null]) => [title, file, duration]);
+    });
+
     // Clips YouTube : [titre affiché, identifiant de la vidéo]
     const CLIPS = [
         ['Réveil', 'aEg4Ets0XpI'], ['Président', 'ykbcHwfTZjU'], ['Jongoloni', '-FTRo4WohjA'],
@@ -523,9 +528,14 @@
     const tracklistWrap = document.getElementById('tracklist');
     const tracklistInner = document.getElementById('tracklist-inner');
 
-    backgroundVideo.muted = true;
-    backgroundVideo.play().catch(error => {
-        console.warn('Lecture automatique de la vidéo bloquée :', error);
+    document.addEventListener('DOMContentLoaded', function() {
+        const video = document.getElementById('bg-video');
+        if (video) {
+            video.muted = true;
+            video.play().catch(error => {
+                console.log('Autoplay bloqué, relance manuelle :', error);
+            });
+        }
     });
 
     let current = null;      // { p: index projet, t: index piste } de la piste chargée
@@ -535,7 +545,12 @@
     try { favs = new Set(JSON.parse(localStorage.getItem('favs') || '[]')); } catch (e) {}
 
     const coverUrl = p => encodeURI(IMAGE_DIR + PROJECTS[p].cover);
-    const trackUrl = (p, t) => encodeURI(AUDIO_DIR + PROJECTS[p].tracks[t][1]);
+    const audioFileUrl = file => {
+        const filename = String(file || '').trim();
+        if (!/\.mp3$/i.test(filename)) throw new Error(`Fichier audio invalide : ${filename || '(vide)'}`);
+        return AUDIO_DIR + encodeURIComponent(filename);
+    };
+    const trackUrl = (p, t) => audioFileUrl(PROJECTS[p].tracks[t][1]);
     const fmt = s => isFinite(s) ? Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0') : '--:--';
 
     /* ---------- Lecture ---------- */
@@ -593,6 +608,11 @@
     audioElement.addEventListener('ended', () => {
         syncUI();
         nextTrack();
+    });
+    audioElement.addEventListener('error', () => {
+        const source = audioElement.src || '(source absente)';
+        console.error(`Impossible de charger la piste audio : ${source}`);
+        showToast('Impossible de charger cette piste audio');
     });
     audioElement.addEventListener('loadedmetadata', () => {
         const src = audioElement.currentSrc || audioElement.src;
