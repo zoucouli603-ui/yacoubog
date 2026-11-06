@@ -525,7 +525,6 @@
     let current = null;      // { p: index projet, t: index piste } de la piste chargée
     let openProject = null;  // index du projet dont la tracklist est ouverte
     const durations = {};    // cache des durées (src -> "m:ss")
-    const probes = [];
     let favs = new Set();
     try { favs = new Set(JSON.parse(localStorage.getItem('favs') || '[]')); } catch (e) {}
 
@@ -535,16 +534,18 @@
 
     /* ---------- Lecture ---------- */
     function playAudio(fileUrl, title, cover) {
+        audioElement.pause();
         audioElement.src = fileUrl;
+        audioElement.load();
         document.getElementById('current-song').innerText = title;
         document.getElementById('player-cover').src = cover || DEFAULT_COVER;
         audioElement.play().catch(e => console.log("Erreur de lecture audio :", e));
     }
 
-    function playTrack(p, t) {
+    function playTrack(p, t, fileUrl = trackUrl(p, t)) {
         current = { p, t };
         const name = PROJECTS[p].tracks[t][0];
-        playAudio(trackUrl(p, t), name + ' - ' + ARTIST, coverUrl(p));
+        playAudio(fileUrl, name + ' - ' + ARTIST, coverUrl(p));
         document.getElementById('current-meta').innerText = ARTIST + ' • ' + PROJECTS[p].title;
         syncUI();
     }
@@ -586,6 +587,13 @@
     audioElement.addEventListener('ended', () => {
         syncUI();
         nextTrack();
+    });
+    audioElement.addEventListener('loadedmetadata', () => {
+        const src = audioElement.currentSrc || audioElement.src;
+        durations[src] = fmt(audioElement.duration);
+        document.querySelectorAll('.dur').forEach(el => {
+            if (el.dataset.src === src) el.textContent = durations[src];
+        });
     });
     audioElement.addEventListener('timeupdate', () => {
         const pct = audioElement.duration ? (audioElement.currentTime / audioElement.duration) * 100 : 0;
@@ -630,7 +638,7 @@
     function renderTracklist(i) {
         const p = PROJECTS[i];
         const rows = p.tracks.map(([title, file, fallbackDuration], t) => `
-            <div class="track-row item-bg p-3 rounded-2xl border flex items-center gap-3" data-p="${i}" data-t="${t}">
+            <div class="track-row item-bg p-3 rounded-2xl border flex items-center gap-3" data-p="${i}" data-t="${t}" data-src="${trackUrl(i, t)}">
                 <span class="track-num w-5 text-center text-[11px] text-gray-400 flex-shrink-0">${t + 1}</span>
                 <span class="eq flex flex-shrink-0"><span></span><span></span><span></span></span>
                 <img src="${coverUrl(i)}" alt="" class="w-10 h-10 rounded-xl object-cover border border-dark-border flex-shrink-0">
@@ -645,7 +653,7 @@
                 <button type="button" class="share-btn icon-btn text-gray-400 w-8 h-8 hidden sm:flex items-center justify-center" aria-label="Partager ${title}">
                     <i class="fas fa-share-nodes text-sm"></i>
                 </button>
-                <button type="button" class="play-btn w-9 h-9 bg-brand text-white rounded-xl flex items-center justify-center shadow-md shadow-brand/30 hover:scale-105 transition flex-shrink-0" aria-label="Lire ${title}">
+                <button type="button" class="play-btn w-9 h-9 bg-brand text-white rounded-xl flex items-center justify-center shadow-md shadow-brand/30 hover:scale-105 transition flex-shrink-0" data-src="${trackUrl(i, t)}" aria-label="Lire ${title}">
                     <i class="fas fa-play text-[10px]"></i>
                 </button>
             </div>`).join('');
@@ -671,28 +679,6 @@
         tracklistInner.classList.add('anim-in');
 
         syncUI();
-        loadDurations(i);
-    }
-
-    // Lit les durées réelles dans les métadonnées des fichiers audio
-    function loadDurations(i) {
-        PROJECTS[i].tracks.forEach(([, , declaredDuration], t) => {
-            const src = trackUrl(i, t);
-            if (declaredDuration) {
-                durations[src] = declaredDuration;
-                document.querySelectorAll('.dur').forEach(el => { if (el.dataset.src === src) el.textContent = declaredDuration; });
-                return;
-            }
-            if (durations[src]) return;
-            const probe = new Audio();
-            probes.push(probe); // garde une référence pour éviter l'annulation par le ramasse-miettes
-            probe.preload = 'metadata';
-            probe.addEventListener('loadedmetadata', () => {
-                durations[src] = fmt(probe.duration);
-                document.querySelectorAll('.dur').forEach(el => { if (el.dataset.src === src) el.textContent = durations[src]; });
-            });
-            probe.src = src;
-        });
     }
 
     function selectProject(i) {
@@ -750,9 +736,10 @@
         const row = e.target.closest('.track-row');
         if (!row) return;
         const p = +row.dataset.p, t = +row.dataset.t;
+        const source = (e.target.closest('[data-src]') || row).dataset.src;
         if (e.target.closest('.play-btn')) {
             if (current && current.p === p && current.t === t) togglePlay();
-            else playTrack(p, t);
+            else playTrack(p, t, source);
         } else if (e.target.closest('.fav-btn')) {
             const file = PROJECTS[p].tracks[t][1];
             favs.has(file) ? favs.delete(file) : favs.add(file);
@@ -760,6 +747,10 @@
             e.target.closest('.fav-btn').querySelector('i').className = (favs.has(file) ? 'fas text-brand' : 'far') + ' fa-heart text-sm';
         } else if (e.target.closest('.share-btn')) {
             shareTrack(p, t);
+        } else if (current && current.p === p && current.t === t) {
+            togglePlay();
+        } else {
+            playTrack(p, t, source);
         }
     });
 
